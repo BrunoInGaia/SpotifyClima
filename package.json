@@ -1,0 +1,11 @@
+{
+  "name": "spotifytemp",
+  "version": "1.0.0",
+  "description": "API comunicacao com spotify e temperatura das cidades",
+  "main": "app.js",
+  "scripts": {
+    "test": "nodemon app.js"
+  },
+  "author": "Bruno Teodosio",
+  "license": "ISC"
+}
