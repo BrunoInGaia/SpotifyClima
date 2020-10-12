@@ -1,8 +1,9 @@
 const fetch = require('node-fetch');
+require('dotenv/config');
 
 async function fetchToken(){
-    const clientID = '5694770023674cdf87103da30972d057';
-    const clientSecret = '428a83c6fbc04d248fe2d08d7dadd85c';
+    const clientID = process.env.ENV_CLIENT_ID;
+    const clientSecret = process.env.ENV_CLIENT_SECRET;
 
     const urlToken = 'https://accounts.spotify.com/api/token';
     const resultado = await fetch(urlToken,{
