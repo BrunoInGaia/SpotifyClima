@@ -1,11 +1,28 @@
-const requisicao = require('request');
+const fetch = require('node-fetch');
 
-exports.obtemClima = ctx => {
+async function fetchClima(cidade){
+    let urlClima = "http://api.openweathermap.org/data/2.5/weather?q="+cidade+"&appid=de1d0edd29bd7b6432564fd5a1d5b57d";
+    const resultado = await fetch(urlClima);
+    const dados = await resultado.json();
+    return dados;
+}
+
+var climaCidade =  {
+    nome:'',
+    ceu:{},
+    clima:{}
+}
+
+exports.obtemClimaInterno = async (cidade) => {
+    let clima = await fetchClima(cidade);
+    climaCidade.nome = clima.name;
+    climaCidade.ceu = clima.weather;
+    climaCidade.clima = clima.main;
+    return climaCidade;
+}
+
+exports.obtemClima = async ctx => {
     var cidade = ctx.request.query.cidade;
-    let url = "http://api.openweathermap.org/data/2.5/weather?q="+cidade+"&appid=de1d0edd29bd7b6432564fd5a1d5b57d";
-    ctx.body = requisicao(url,(error,response,body)=>{
-        if(!error && response.statusCode == 200){
-            return JSON.parse(body);
-        }
-    });
+    let clima = await fetchClima(cidade);
+    ctx.body = clima;
 };

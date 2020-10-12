@@ -42,8 +42,8 @@ async function fetchTracks(token, playlistId){
 
 async function fetchGeneros(token){
     const limite = 49;
-    const urlTracks = 'https://api.spotify.com/v1/browse/categories?limit='+limite;
-    const resultado = await fetch(urlTracks,{
+    const urlGenero = 'https://api.spotify.com/v1/browse/categories?limit='+limite;
+    const resultado = await fetch(urlGenero,{
         method: 'GET',
         headers: { 'Authorization' : 'Bearer ' + token }
     });
@@ -59,6 +59,12 @@ exports.obtemPlaylist = async ctx => {
     ctx.body = playlists[0].id;
 };
 
+exports.obtemPlaylistInterno = async (genero) => {
+    let token = await fetchToken();
+    let playlists = await fetchPlaylist(token,genero);
+    return playlists[0].id;
+};
+
 exports.obtemMusica = async ctx => {
     let token = await fetchToken();
     let playlistId = ctx.query.playlist;
@@ -68,6 +74,16 @@ exports.obtemMusica = async ctx => {
         musicas += musica.track.name+"\n";
     });
     ctx.body = musicas;
+};
+
+exports.obtemMusicaInterno = async (playlistId) => {
+    let token = await fetchToken();
+    let tracks = await fetchTracks(token,playlistId);
+    var musicas = '';
+    tracks.forEach(musica => {
+        musicas += musica.track.name+"\n";
+    });
+    return musicas;
 };
 
 exports.obtemGeneros = async ctx => {

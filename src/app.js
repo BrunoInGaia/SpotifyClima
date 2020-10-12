@@ -12,6 +12,7 @@ rotas.get('/clima',clima.obtemClima);
 rotas.get('/playlist',spotify.obtemPlaylist);
 rotas.get('/musica',spotify.obtemMusica);
 rotas.get('/genero',spotify.obtemGeneros);
+rotas.get('/',musicaClima.musicaClima);
 
 app.use(rotas.routes());
 
