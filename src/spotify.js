@@ -53,6 +53,14 @@ async function fetchGeneros(token){
     return dados.categories.items;
 }
 
+function sanitizarMusicas(tracks){
+    var musicasSanitizada = '';
+    tracks.forEach(musica => {
+        musicasSanitizada += musica.track.name+";";
+    });
+    return musicasSanitizada;
+}
+
 exports.obtemPlaylist = async ctx => {
     let token = await fetchToken();
     let genero = ctx.query.genero;
@@ -70,21 +78,15 @@ exports.obtemMusica = async ctx => {
     let token = await fetchToken();
     let playlistId = ctx.query.playlist;
     let tracks = await fetchTracks(token,playlistId);
-    var musicas = '';
-    tracks.forEach(musica => {
-        musicas += musica.track.name+"\n";
-    });
-    ctx.body = musicas;
+    tracks = sanitizarMusicas(tracks);
+    ctx.body = tracks;
 };
 
 exports.obtemMusicaInterno = async (playlistId) => {
     let token = await fetchToken();
     let tracks = await fetchTracks(token,playlistId);
-    var musicas = '';
-    tracks.forEach(musica => {
-        musicas += musica.track.name+"\n";
-    });
-    return musicas;
+    tracks = sanitizarMusicas(tracks);
+    return tracks;
 };
 
 exports.obtemGeneros = async ctx => {

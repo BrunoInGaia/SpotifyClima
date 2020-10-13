@@ -1,6 +1,13 @@
 const clima = require('./clima.js');
 const spotify = require('./spotify.js');
 
+spotifyClima = {
+    climaInfo:{},
+    genero:'',
+    playlistId:'',
+    musicas:''
+}
+
 exports.musicaClima = async ctx => {
 
     if(!ctx.request.query.cidade){
@@ -8,30 +15,33 @@ exports.musicaClima = async ctx => {
     }
 
     var cidade = ctx.request.query.cidade;
-    var resultadoClima = await clima.obtemClimaInterno(cidade);
+    spotifyClima.climaInfo = await clima.obtemClimaInterno(cidade);
     
-    if(resultadoClima.status != '200'){
+    if(spotifyClima.climaInfo.status != '200'){
         ctx.throw(404, 'Cidade não encontrada');
     }
 
-    let tempCidade = resultadoClima.clima.temp;
+    let tempCidade = spotifyClima.climaInfo.clima.temp;
+    
+    var musicas;
+    var playlistId;
 
     if( tempCidade > 25){
-        var playlistId = await spotify.obtemPlaylistInterno("pop");
-        //console.log(playlistId);
-        var musicas = await spotify.obtemMusicaInterno(playlistId);
-        ctx.body = musicas;
+        spotifyClima.genero = "Pop";
+        playlistId = await spotify.obtemPlaylistInterno("pop");
+        musicas = await spotify.obtemMusicaInterno(playlistId);
     }else if( tempCidade <= 25 && tempCidade >= 10){
-        var playlistId = await spotify.obtemPlaylistInterno("rock");
-        //console.log(playlistId);
-        var musicas = await spotify.obtemMusicaInterno(playlistId);
-        ctx.body = musicas;
+        spotifyClima.genero = "Rock";
+        playlistId = await spotify.obtemPlaylistInterno("rock");
+        musicas = await spotify.obtemMusicaInterno(playlistId);
     }else{
-        var playlistId = await spotify.obtemPlaylistInterno("classical");
-        //console.log(playlistId);
-        var musicas = await spotify.obtemMusicaInterno(playlistId);
-        ctx.body = musicas;
+        spotifyClima.genero = "Classico";
+        playlistId = await spotify.obtemPlaylistInterno("classical");
+        musicas = await spotify.obtemMusicaInterno(playlistId);
     }
+
+    spotifyClima.playlistId = playlistId;
+    spotifyClima.musicas = musicas;
     
-    //ctx.body = resultadoClima;
+    ctx.body = spotifyClima;
 };
