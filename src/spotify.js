@@ -27,7 +27,13 @@ async function fetchPlaylist(token, generoId){
     });
 
     const dados = await resultado.json();
-    return dados.playlists.items;
+
+    if(dados.error){
+        return dados
+    }else{
+        return dados.playlists.items;
+    }
+    
 }
 
 async function fetchTracks(token, playlistId){
@@ -38,7 +44,12 @@ async function fetchTracks(token, playlistId){
     });
 
     const dados = await resultado.json();
-    return dados.tracks.items;
+
+    if(dados.error){
+        return dados
+    }else{
+        return dados.tracks.items;
+    }
 }
 
 async function fetchGeneros(token){
@@ -65,6 +76,11 @@ exports.obtemPlaylist = async ctx => {
     let token = await fetchToken();
     let genero = ctx.query.genero;
     let playlists = await fetchPlaylist(token,genero);
+    
+    if(playlists.error){
+        ctx.throw(404, playlists.error);
+    }
+
     ctx.body = playlists[0].id;
 };
 
@@ -78,6 +94,11 @@ exports.obtemMusica = async ctx => {
     let token = await fetchToken();
     let playlistId = ctx.query.playlist;
     let tracks = await fetchTracks(token,playlistId);
+
+    if(tracks.error){
+        ctx.throw(404, tracks.error);
+    }
+
     tracks = sanitizarMusicas(tracks);
     ctx.body = tracks;
 };

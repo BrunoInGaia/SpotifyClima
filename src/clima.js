@@ -36,5 +36,10 @@ exports.obtemClimaInterno = async (cidade) => {
 exports.obtemClima = async ctx => {
     var cidade = ctx.request.query.cidade;
     let clima = await fetchClima(cidade);
+
+    if(clima.cod != '200'){
+        ctx.throw(404,clima);
+    }
+    
     ctx.body = clima;
 };
