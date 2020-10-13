@@ -17,4 +17,4 @@ rotas.get('/',musicaClima.musicaClima);
 app.use(rotas.routes());
 
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
