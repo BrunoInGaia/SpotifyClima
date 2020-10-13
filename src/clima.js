@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+require('dotenv/config');
 
 var climaCidade =  {
     nome:'',
@@ -14,7 +15,7 @@ function sanitizarDadosClima(dados){
 }
 
 async function fetchClima(cidade){
-    let urlClima = "http://api.openweathermap.org/data/2.5/weather?q="+cidade+"&units=metric&appid=de1d0edd29bd7b6432564fd5a1d5b57d";
+    let urlClima = "http://api.openweathermap.org/data/2.5/weather?q="+cidade+"&units=metric&appid="+process.env.ENV_CLIMA_TOKEN;
     const resultado = await fetch(urlClima);
     const dados = await resultado.json();
     return dados;
