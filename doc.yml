@@ -1,0 +1,124 @@
+swagger: "2.0"
+info:
+  title: Spotify Clima
+  version: '1.0'
+  description: "Essa API mostra as músicas de uma Playlist do Spotify de acordo com o Clima da Cidade escolhida.
+  Exemplo: Clima acida de 25°C será exibida as músicas da Playlist POP. Clima entre 10°C e 25°C será exibita as músicas
+  da Playlist Rock e, por fim, Clima abaixo de 10°C será exibia as músicas da Playlist Classica."
+
+host: "climaspotify.herokuapp.com"
+
+tags:
+- name: "/"
+  description: "Exibe as músicas de acordo com o clima."
+- name: "clima"
+  description: "Exibe o clima e informações meteorológicas sobre a cidade informada."
+  externalDocs:
+    description: "Find out more"
+    url: "https://openweathermap.org/api"
+- name: "playlist"
+  description: "Exibe o ID da playlist quando informado um gênero."
+  externalDocs:
+    description: "Find out more"
+    url: "https://developer.spotify.com/documentation/web-api/"
+- name: "musica"
+  description: "Exibe as músicas da playlist informada."
+  externalDocs:
+    description: "Find out more"
+    url: "https://developer.spotify.com/documentation/web-api/"
+- name: "genero"
+  description: "Exibe os gêneros cadastrados no Spotify."
+  externalDocs:
+    description: "Find out more"
+    url: "https://developer.spotify.com/documentation/web-api/"
+
+
+paths:
+  /:
+    get:
+      tags:
+      - "/"
+      summary: "Obtem lista de músicas de acordo com o clima."
+      description: "Exibe uma lista de músicas de acordo com o clima da cidade informada. Exibe também informações sobre a cidade."
+      operationId: "climaSpotify"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "cidade"
+        in: "query"
+        description: "Cidade que deseja consultar."
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "City not Found"
+  /clima:
+    get:
+      tags:
+      - "clima"
+      summary: "Obtem informações meteorológicas da cidade informada."
+      description: "A cidade informada deve estar no idioma inglês e não é Case Sensitive."
+      operationId: "climaInfo"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "cidade"
+        in: "query"
+        description: "Cidade que deseja consultar."
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "City not Found"
+  /playlist:
+    get:
+      tags:
+      - "playlist"
+      summary: "Obtem o ID da playlist."
+      description: "Informando um gênero é possível consultar o Id da playlist."
+      operationId: "playlistID"
+      parameters:
+      - name: "genero"
+        in: "query"
+        description: "Genero para consultar o Id da playlist."
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Playlist not found"
+  /musica:
+      get:
+        tags:
+        - "musica"
+        summary: "Lista as músicas de uma playlist."
+        description: "Informando o Id da playlist é possível listar as músicas."
+        operationId: "listarMusicas"
+        parameters:
+        - name: "playlist"
+          in: "query"
+          description: "Id da playlist que deseja exibir as músicas."
+          required: true
+          type: "string"
+        responses:
+          "200":
+            description: "successful operation"
+          "404":
+            description: "Invalid playlist Id"
+  /genero:
+      get:
+        tags:
+        - "genero"
+        summary: "Lista os generos mais comuns no Spotify."
+        description: "Lista os principais gêneros de playlist no Spotify."
+        operationId: "listarGeneros"
+        responses:
+          "200":
+            description: "successful operation"
