@@ -6,10 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**climaInfo**](ClimaApi.md#climaInfo) | **GET** /clima | Obtem informações meteorológicas da cidade informada.
 
-
-<a name="climaInfo"></a>
-# **climaInfo**
-> climaInfo(cidade)
+### Description
 
 Obtem informações meteorológicas da cidade informada.
 

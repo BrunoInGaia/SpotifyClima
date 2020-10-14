@@ -6,10 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**playlistID**](PlaylistApi.md#playlistID) | **GET** /playlist | Obtem o ID da playlist.
 
-
-<a name="playlistID"></a>
-# **playlistID**
-> playlistID(genero)
+### Description
 
 Obtem o ID da playlist.
 

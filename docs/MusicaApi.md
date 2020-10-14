@@ -6,10 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**listarMusicas**](MusicaApi.md#listarMusicas) | **GET** /musica | Lista as músicas de uma playlist.
 
-
-<a name="listarMusicas"></a>
-# **listarMusicas**
-> listarMusicas(playlist)
+### Description
 
 Lista as músicas de uma playlist.
 

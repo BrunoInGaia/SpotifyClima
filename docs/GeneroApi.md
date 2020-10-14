@@ -6,10 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**listarGeneros**](GeneroApi.md#listarGeneros) | **GET** /genero | Lista os generos mais comuns no Spotify.
 
-
-<a name="listarGeneros"></a>
-# **listarGeneros**
-> listarGeneros()
+### Description
 
 Lista os generos mais comuns no Spotify.
 
