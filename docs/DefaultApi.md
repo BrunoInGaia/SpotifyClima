@@ -6,10 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**climaSpotify**](DefaultApi.md#climaSpotify) | **GET** / | Obtem lista de músicas de acordo com o clima.
 
-
-<a name="climaSpotify"></a>
-# **climaSpotify**
-> climaSpotify(cidade)
+### Description
 
 Obtem lista de músicas de acordo com o clima.
 
